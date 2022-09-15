@@ -2,6 +2,14 @@ pipeline {
     agent any
 
     stages {
+        
+        stage('sonar scan') {
+            steps {
+                withSonarQubeEnv(credentialsId:'sonar-qube') {
+                sh 'mvn sonar:sonar'
+                }
+            }
+        }
        
         stage('compile') {
             steps {
