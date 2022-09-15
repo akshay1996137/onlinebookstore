@@ -15,6 +15,13 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        stage('sonar scan') {
+            steps {
+                withSonarQubeEnv('sonar-scan') {
+                sh 'mvn sonar:sonar'
+                }
+            }
+        }
         
         stage('package') {
             steps {
