@@ -3,6 +3,15 @@ pipeline {
 
     stages {
         
+         stage('sonar scan') {
+            steps {
+                withSonarQubeEnv('sonar-scan') {
+                sh 'mvn sonar:sonar'
+                }
+            }
+        }
+        
+        
         stage('compile') {
             steps {
                 echo 'compiling..'
@@ -15,14 +24,7 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('sonar scan') {
-            steps {
-                withSonarQubeEnv('sonar-scan') {
-                sh 'mvn sonar:sonar'
-                }
-            }
-        }
-        
+       
         stage('package') {
             steps {
                 sh 'mvn package'
